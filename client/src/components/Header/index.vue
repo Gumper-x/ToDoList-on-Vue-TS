@@ -2,7 +2,7 @@
   <header>
     <nav>
       <router-link :to="{ name: 'Home' }">Home</router-link>
-      <router-link :to="{ name: 'About' }">About</router-link>
+      <router-link :to="{ name: 'About' }">Abdout</router-link>
       <div class="activeLink"></div>
     </nav>
   </header>
