@@ -7,8 +7,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "lint:check": "eslint src/**",
-    "lint:fix": "eslint src/** --fix --color"
+    "lint:check": "eslint --ext js,jsx,ts,tsx,vue src/ tests/",
+    "lint:fix": "eslint --ext js,jsx,ts,tsx,vue src/ tests/ --fix --color"
   },
   "dependencies": {
     "core-js": "^3.6.5",
