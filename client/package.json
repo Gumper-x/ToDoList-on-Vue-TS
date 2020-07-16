@@ -8,7 +8,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "lint:check": "eslint src/**",
-    "lint:fix": "eslint src/** --fix"
+    "lint:fix": "eslint src/** --fix --color"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -42,5 +42,16 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js}": [
+      "yarn lint:fix",
+      "git add"
+    ]
   }
 }
