@@ -17,6 +17,7 @@
     mounted() {
       const ctxRouter: any = this.$route.name;
       console.log(ctxRouter);
+      const dd = "df";
     }
   }
 </script>
