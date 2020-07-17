@@ -9,6 +9,9 @@
 
   export default class Home extends Vue {
     counter = 1;
+    click() {
+      const dd = 2;
+    }
   }
 </script>
 
