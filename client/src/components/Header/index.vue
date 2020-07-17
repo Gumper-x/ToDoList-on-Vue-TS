@@ -1,5 +1,6 @@
 <template>
   <header>
+    <h1>TTD</h1>
     <nav>
       <router-link :to="{ name: 'Home' }">Home</router-link>
       <router-link :to="{ name: 'About' }">About</router-link>
@@ -10,16 +11,9 @@
 
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
-  import { ctxRouter } from "./typings";
 
   @Component
-  export default class Header extends Vue {
-    mounted() {
-      const ctxRouter: any = this.$route.name;
-      console.log(ctxRouter);
-      const dd = "df";
-    }
-  }
+  export default class Header extends Vue {}
 </script>
 
 <style lang="scss" scoped>

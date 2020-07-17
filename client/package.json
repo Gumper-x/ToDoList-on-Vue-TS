@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
     "lint:check": "eslint --ext js,jsx,ts,tsx,vue src/ tests/",
+    "lint:css": "stylelint src/assets --fix",
     "lint:fix": "eslint --ext js,jsx,ts,tsx,vue src/ tests/ --fix --color"
   },
   "dependencies": {
@@ -40,6 +41,8 @@
     "node-sass": "^4.12.0",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
+    "stylelint": "^13.6.1",
+    "stylelint-config-standard": "^20.0.0",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
   },
