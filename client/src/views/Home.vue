@@ -1,14 +1,18 @@
 <template>
   <div class="home">
-    <Header showDetails="HI" />
+    <!-- <button @click="click">CLICK</button> -->
   </div>
 </template>
 
 <script lang="ts">
-  import { Vue } from "vue-property-decorator";
-
+  import { Component, Vue } from "vue-property-decorator";
+  @Component
   export default class Home extends Vue {
     counter = 1;
+    // click() {
+    //   const routeHistory = this.$router.base;
+    //   console.log(routeHistory);
+    // }
   }
 </script>
 
