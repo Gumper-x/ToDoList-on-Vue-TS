@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <router-view />
+    <main class="page__content" style="padding-top: 60px">
+      <router-view />
+    </main>
   </div>
 </template>
 
@@ -38,6 +40,11 @@
     a {
       color: var(--text);
       text-decoration: none;
+    }
+    main.page__content {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
     }
   }
 </style>

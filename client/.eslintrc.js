@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "max-len": ["error", 150, { ignoreUrls: true }],
+    "max-len": ["error", 150, { ignoreUrls: true, ignorePattern: 'd="([\\s\\S]*?)"' }],
   },
   overrides: [
     {

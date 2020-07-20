@@ -20,7 +20,7 @@
 
   @Component
   export default class Header extends Vue {
-    propertyNavs = {
+    private propertyNavs = {
       homeLinkWidth: 0,
       aboutLinkWidth: 0,
     };
@@ -63,6 +63,9 @@
       cursor: pointer;
       &:hover {
         animation: text-shadow 1.5s ease-in-out;
+      }
+      a {
+        display: block;
       }
     }
 
