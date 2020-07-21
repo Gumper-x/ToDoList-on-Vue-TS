@@ -9,7 +9,7 @@
 
 <script lang="ts">
   import { Component, Vue } from "vue-property-decorator";
-  import Header from "@/components/Header/index.vue";
+  import Header from "@/components/Header.vue";
 
   @Component({
     components: {
@@ -20,7 +20,7 @@
 </script>
 
 <style lang="scss">
-  @import "./assets/css/minireset.min.css";
+  @import "./assets/css/minireset.css";
   @import url("https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;500;600;700&display=swap");
 
   :root {

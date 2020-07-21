@@ -51,12 +51,14 @@
 <style lang="scss" scoped>
   header {
     position: fixed;
+    z-index: 10;
     top: 0;
     width: 100%;
     display: flex;
     align-items: center;
     padding: 10px 15px;
     background: #2a2d2e;
+    box-shadow: 0 2px 10px rgba(42, 45, 46, 0.2);
     h1 {
       font-size: 2em;
       font-weight: 800;

@@ -2,7 +2,10 @@
   <section class="wrapper-task-row">
     <svg
       :class="{ animate: animateState }"
-      :style="{ opacity: opacityTrash, transform: 'translateX(' + offsetTrash + 'px)' }"
+      :style="{
+        opacity: propertiesTrash.opacityTrash,
+        transform: `translateX(${propertiesTrash.offsetTrash}px) scale(${propertiesTrash.scaleTrash})`,
+      }"
       id="trash-icon"
       viewBox="0 0 16 16"
       class="bi bi-trash2-fill"
@@ -18,16 +21,9 @@
       />
     </svg>
     <div class="container-task-row" :class="{ animate: animateState }" :style="{ '--x': shiftPan + 'px' }">
-      <h3>{{ title }}</h3>
+      <slot />
       <button v-hammer:pan.horizontal="panHorizontal" v-hammer:panstart="panStart" v-hammer:panend="panEnd">
-        <svg
-          width="1em"
-          height="1em"
-          viewBox="0 0 16 16"
-          class="bi bi-grip-horizontal"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-grip-horizontal" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
           />
@@ -39,35 +35,57 @@
 
 <script lang="ts">
   import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+  import { eventHammer } from "@/components/typings/TaskRow";
   import { VueHammer } from "vue2-hammer";
   Vue.use(VueHammer);
 
   @Component
   export default class Home extends Vue {
-    @Prop({ required: true, type: String }) readonly title!: string;
     @Prop({ required: true, type: Number }) readonly id!: number;
 
     shiftPan = 0;
-    offsetTrash = 30;
-    opacityTrash = 0;
+    propertiesTrash = {
+      offsetTrash: 30,
+      scaleTrash: 0.8,
+      opacityTrash: 0,
+    };
     animateState = true;
 
-    panHorizontal(e: any) {
-      if (e.deltaX <= 0) {
-        this.shiftPan = e.deltaX;
-      }
-      if (e.additionalEvent === "panleft") {
-        if (this.opacityTrash <= 1) {
-          this.opacityTrash += 0.01;
-        }
+    calculateRange(maxPoint: number, currentPoint: number) {
+      return (currentPoint / maxPoint) * 100;
+    }
 
-        if (this.offsetTrash >= 0) {
-          this.offsetTrash -= 0.3;
-        }
-      } else if (e.additionalEvent === "panright") {
-        if (e.deltaX >= -100) {
-          this.opacityTrash -= 0.01;
-          this.offsetTrash += 0.3;
+    conversionFromPercentageToValue(maxValue: number, percent: number) {
+      return (percent / 100) * maxValue;
+    }
+
+    reversConversionFromPercentageToValue(maxValue: number, percent: number) {
+      return maxValue - (percent / 100) * maxValue;
+    }
+
+    scaleConversionFromPercentageToValue(minValue: number, maxValue: number, percent: number) {
+      const averageValues = maxValue - minValue;
+
+      return minValue + (percent / 100) * parseFloat(averageValues.toFixed(1));
+    }
+
+    panHorizontal(e: eventHammer) {
+      const absoluteValueDeltaX = Math.abs(e.deltaX);
+      console.log();
+
+      if (e.deltaX >= -100 && e.deltaX <= 0) {
+        this.shiftPan = e.deltaX;
+
+        if (e.additionalEvent === "panleft") {
+          this.propertiesTrash.opacityTrash = this.conversionFromPercentageToValue(1, this.calculateRange(100, absoluteValueDeltaX));
+          this.propertiesTrash.offsetTrash = this.reversConversionFromPercentageToValue(30, this.calculateRange(100, absoluteValueDeltaX));
+          this.propertiesTrash.scaleTrash = this.scaleConversionFromPercentageToValue(0.8, 1, this.calculateRange(100, absoluteValueDeltaX));
+        } else if (e.additionalEvent === "panright") {
+          if (e.deltaX >= -100) {
+            this.propertiesTrash.opacityTrash = this.conversionFromPercentageToValue(1, this.calculateRange(100, absoluteValueDeltaX));
+            this.propertiesTrash.offsetTrash = this.reversConversionFromPercentageToValue(30, this.calculateRange(100, absoluteValueDeltaX));
+            this.propertiesTrash.scaleTrash = this.scaleConversionFromPercentageToValue(0.8, 1, this.calculateRange(100, absoluteValueDeltaX));
+          }
         }
       }
     }
@@ -76,11 +94,11 @@
       this.animateState = false;
     }
 
-    panEnd(e: any) {
+    panEnd(e: eventHammer) {
       this.animateState = true;
       this.shiftPan = 0;
-      this.offsetTrash = 30;
-      this.opacityTrash = 0;
+      this.propertiesTrash.offsetTrash = 30;
+      this.propertiesTrash.opacityTrash = 0;
       if (e.deltaX <= -100) {
         this.removeTask(this.id);
       }
@@ -122,6 +140,7 @@
       border-radius: 4px;
       padding-left: 10px;
       color: #000;
+      box-shadow: 4px 0 8px rgba(9, 8, 32, 0.15);
       transform: translateX(var(--x, 0));
       &.animate {
         transition: 0.3s ease-in-out;
@@ -136,6 +155,9 @@
         transition: background 0.3s ease;
         &:hover {
           background: var(--context-half);
+        }
+        &:active {
+          cursor: grabbing;
         }
         svg {
           width: 2.4rem;

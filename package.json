@@ -15,7 +15,6 @@
     "@types/vue2-hammer": "^2.1.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
-    "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.2.0",
     "vue2-hammer": "^2.1.2",
@@ -46,7 +45,8 @@
     "stylelint": "^13.6.1",
     "stylelint-config-standard": "^20.0.0",
     "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuex-module-decorators": "^0.17.0"
   },
   "husky": {
     "hooks": {
