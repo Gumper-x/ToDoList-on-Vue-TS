@@ -1,11 +1,11 @@
 <template>
   <div class="wrapper-home">
     <TaskAdd />
-    <button @click="click">d</button>
-    {{ storeUser.getName }}
-    <TaskRow v-for="(task, index) in tasks" :id="index" @remove-task="removeTodo" :key="task">
-      {{ task }}
-    </TaskRow>
+    <transition-group tag="ul" name="remove">
+      <TaskRow v-for="task in storeTask.getTasks" :id="task.id" :key="task.id">
+        {{ task.title }}
+      </TaskRow>
+    </transition-group>
   </div>
 </template>
 
@@ -16,7 +16,7 @@
   import TaskAdd from "@/components/TaskAdd.vue";
   // Vuex
   import { getModule } from "vuex-module-decorators";
-  import User from "@/store/modules/user";
+  import Task from "@/store/modules/task";
 
   @Component({
     components: {
@@ -25,19 +25,19 @@
     },
   })
   export default class Home extends Vue {
-    storeUser = getModule(User, this.$store);
-
-    tasks = ["Work", "Suck", "Ready"];
-    click() {
-      console.log(this.storeUser);
-    }
-    removeTodo(id: number) {
-      console.log(this.tasks.splice(id, 1));
-    }
+    storeTask = getModule(Task, this.$store);
   }
 </script>
 
 <style lang="scss" scoped>
+  .remove-enter-active,
+  .remove-leave-active {
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .remove-enter, .remove-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    transform: scale(0.8);
+    opacity: 0;
+  }
   .wrapper-home {
     margin-top: 1rem;
     background: rgb(59, 59, 59);

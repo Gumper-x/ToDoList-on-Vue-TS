@@ -43,6 +43,7 @@
     }
     main.page__content {
       width: 100%;
+      padding: 0 0.4rem;
       max-width: 920px;
       margin: 0 auto;
     }
