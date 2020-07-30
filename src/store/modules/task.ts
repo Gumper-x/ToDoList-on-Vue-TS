@@ -1,7 +1,11 @@
+import Vuex from "vuex";
+import Vue from "vue";
+Vue.use(Vuex);
 import { VuexModule, Module, Mutation } from "vuex-module-decorators";
 import { taskModule } from "../typings/task";
 
-@Module({ name: "Task" })
+const store = new Vuex.Store({});
+@Module({ name: "Task", store })
 export default class Task extends VuexModule {
   private tasks: taskModule[] = [];
   @Mutation

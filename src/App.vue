@@ -36,7 +36,6 @@
     -moz-osx-font-smoothing: grayscale;
     background: #181717;
     color: var(--text);
-    height: 2000px;
     a {
       color: var(--text);
       text-decoration: none;

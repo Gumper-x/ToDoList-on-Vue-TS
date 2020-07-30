@@ -1,6 +1,6 @@
 <template>
   <div class="task-add">
-    <input v-model="inputValue" @keyup.enter="addTask" type="text" class="task-add__input" required />
+    <input v-model="inputValue" @keyup.enter="addTask" type="text" class="task-add__input" placeholder="Ready to work" required />
     <button class="task-add__button-add" @click="addTask">+</button>
   </div>
 </template>
@@ -18,6 +18,7 @@
     addTask() {
       if (this.inputValue !== "") {
         this.storeTask.addTask(this.inputValue);
+        this.inputValue = "";
       }
     }
   }
@@ -28,7 +29,7 @@
     display: flex;
     .task-add__input {
       outline: none;
-      font-size: 1.2em;
+      font-size: 1em;
       width: 100%;
       padding: 10px 10px;
       border: 2px solid rgb(163, 163, 163);

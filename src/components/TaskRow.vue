@@ -21,8 +21,8 @@
       />
     </svg>
     <div class="task-row__container" :class="{ animate: animateState }" :style="{ '--x': shiftPan + 'px' }">
-      <slot></slot>
-      <button v-hammer:pan.horizontal="panHorizontal" v-hammer:panstart="panStart" v-hammer:panend="panEnd">
+      <h3 class="task-row__title"><slot></slot></h3>
+      <button ref="slider" v-hammer:pan.horizontal="panHorizontal" v-hammer:panstart="panStart" v-hammer:panend="panEnd">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-grip-horizontal" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
@@ -56,6 +56,15 @@
       opacityTrash: 0,
     };
     animateState = true;
+
+    $refs!: {
+      slider: HTMLFormElement;
+    };
+    mounted() {
+      this.$refs.slider.hammer.set({
+        touchAction: "pan-y",
+      });
+    }
 
     calculateRange(maxPoint: number, currentPoint: number): number {
       return (currentPoint / maxPoint) * 100;
@@ -145,10 +154,13 @@
       &.animate {
         transition: 0.3s ease-in-out;
       }
+      .task-row__title {
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
       button {
         border: none;
         padding: 5px 0 5px 2px;
-        margin-left: 100px;
         outline: none;
         cursor: grab;
         background: var(--context);

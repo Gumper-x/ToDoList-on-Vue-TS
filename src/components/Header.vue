@@ -29,12 +29,10 @@
       aboutLink: HTMLFormElement;
     };
     mounted() {
-      document.onreadystatechange = () => {
-        if (document.readyState == "complete") {
-          this.propertyNavs.homeLinkWidth = this.$refs.homeLink.$el.offsetWidth;
-          this.propertyNavs.aboutLinkWidth = this.$refs.aboutLink.$el.clientWidth;
-        }
-      };
+      this.$nextTick(() => {
+        this.propertyNavs.homeLinkWidth = this.$refs.homeLink.$el.offsetWidth;
+        this.propertyNavs.aboutLinkWidth = this.$refs.aboutLink.$el.clientWidth;
+      });
     }
     get routeTracking(): string {
       if (this.$route.name === "Home") {
