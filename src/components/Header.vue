@@ -7,7 +7,7 @@
           <router-link :to="{ name: 'Home' }" ref="homeLink">Home</router-link>
         </li>
         <li>
-          <router-link :to="{ name: 'About' }" ref="aboutLink">About</router-link>
+          <router-link :to="{ name: 'About' }" ref="aboutLink">Other</router-link>
         </li>
       </ul>
       <div class="active-link-indicator" :style="{ left: routeTracking }"></div>
